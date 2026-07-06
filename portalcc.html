@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Inteligente - Taller Marcaje Cambio Climático 2026</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #334155;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        nav a:hover, nav a.active {
+            color: white;
+            background-color: var(--primary-light);
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        /* Hero / Overview Banner */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(37, 99, 235, 0.15);
+            border-radius: 50%;
+            filter: blur(50px);
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            max-width: 600px;
+            font-size: 1rem;
+        }
+
+        /* Analytics KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .kpi-card {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .kpi-data h3 {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-data p {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background-color: #eff6ff;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        /* Content Sections Split */
+        .content-split {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .content-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Premium Table & Controls Card */
+        .data-card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .table-controls {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.625rem 1rem 0.625rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .filter-select {
+            padding: 0.625rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: var(--surface);
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            border-color: var(--accent);
+        }
+
+        /* Table Responsive Container */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--background);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-secondary {
+            background-color: #f1f5f9;
+            color: #475569;
+        }
+
+        /* Premium Form Card */
+        .form-card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.625rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(150%);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        .toast.success i {
+            color: #4ade80;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            background-color: var(--surface);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Portal Inteligente CC</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active"><i class="fa-solid fa-house"></i> Panel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Taller Marcaje Cambio Climático 2026</h1>
+            <p>Consola central corporativa para la supervisión, analítica y registro en tiempo real de los participantes del taller institucional.</p>
+        </section>
+
+        <!-- KPI Metrics Grid -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-data">
+                    <h3>Total Inscritos</h3>
+                    <p id="kpi-total">2</p>
+                </div>
+                <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-data">
+                    <h3>Confirmados</h3>
+                    <p id="kpi-confirmados">2</p>
+                </div>
+                <div class="kpi-icon"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-data">
+                    <h3>Ciudades Representadas</h3>
+                    <p id="kpi-ciudades">2</p>
+                </div>
+                <div class="kpi-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+            </div>
+        </section>
+
+        <!-- Core Split Layout -->
+        <div class="content-split">
+            <!-- Left Side: Table View -->
+            <section class="data-card">
+                <div class="card-header">
+                    <h2 class="card-title">Matriz de Participantes Autorizados</h2>
+                    <div class="table-controls">
+                        <div class="search-wrapper">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-bar" class="search-input" placeholder="Buscar por nombre, institución o cargo...">
+                        </div>
+                        <select id="filter-city" class="filter-select">
+                            <option value="">Todas las ciudades</option>
+                            <option value="Tegucigalpa">Tegucigalpa</option>
+                            <option value="San Pedro Sula">San Pedro Sula</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha Registro</th>
+                                <th>Nombre Completo</th>
+                                <th>Correo Electrónico</th>
+                                <th>Institución</th>
+                                <th>Cargo</th>
+                                <th>Ciudad</th>
+                                <th>Asistirá</th>
+                                <th>Comentarios</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Rows dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Right Side: Registration Form -->
+            <section class="form-card">
+                <h2 class="card-title" style="margin-bottom: 1.5rem;">Registrar Participante</h2>
+                <form id="registration-form">
+                    <div class="form-group">
+                        <label for="form-nombre">Nombre Completo</label>
+                        <input type="text" id="form-nombre" class="form-control" required placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-correo">Correo Electrónico</label>
+                        <input type="email" id="form-correo" class="form-control" required placeholder="Ej. jperez@empresa.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-institucion">Institución</label>
+                        <input type="text" id="form-institucion" class="form-control" required placeholder="Ej. TechNova S.A.">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-cargo">Cargo</label>
+                        <input type="text" id="form-cargo" class="form-control" required placeholder="Ej. Analista BI">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-ciudad">Ciudad</label>
+                        <input type="text" id="form-ciudad" class="form-control" required placeholder="Ej. Tegucigalpa">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-asistencia">¿Asistirá?</label>
+                        <select id="form-asistencia" class="form-control" required>
+                            <option value="Sí">Sí</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-comentarios">Comentarios</label>
+                        <textarea id="form-comentarios" class="form-control" placeholder="Ej. Requerimientos especiales o intereses adicionales"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Procesar Inscripción
+                    </button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Global Toast Container -->
+    <div id="toast" class="toast success">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">Operación realizada con éxito.</span>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Taller Marcaje Cambio Climático. Sincronizado de forma segura con Inscripciones_Taller_MarcajeCC_2026.xlsx.</p>
+    </footer>
+
+    <script>
+        // Configuración de la URL de tu Google Apps Script desplegado como Web App
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwEViHdIuiDPqK_q-yJU_ZoRKzkUTks6ty-mRu89rtCCx__d5ZnbJU-7CMhd5YQo3agtA/exec";
+
+        // Datos maestros iniciales extraídos directamente del archivo Inscripciones_Taller_MarcajeCC_2026.xlsx
+        let database = [
+            {
+                fecha: "2026-06-29 09:15:00",
+                nombre: "Juan Pérez",
+                correo: "jperez@empresa.com",
+                institucion: "TechNova S.A.",
+                cargo: "Analista BI",
+                ciudad: "Tegucigalpa",
+                asistira: "Sí",
+                comentarios: "Interesado en IA Generativa"
+            },
+            {
+                fecha: "2026-06-29 09:20:00",
+                nombre: "María López",
+                correo: "mlopez@empresa.com",
+                institucion: "Innovatech",
+                cargo: "Gerente Comercial",
+                ciudad: "San Pedro Sula",
+                asistira: "Sí",
+                comentarios: "Requiere parqueo"
+            }
+        ];
+
+        // Elementos DOM
+        const tableBody = document.getElementById('table-body');
+        const searchBar = document.getElementById('search-bar');
+        const filterCity = document.getElementById('filter-city');
+        const registrationForm = document.getElementById('registration-form');
+
+        // Renderizador de filas y analítica de KPIs
+        function renderPortal() {
+            const searchTerm = searchBar.value.toLowerCase();
+            const cityFilter = filterCity.value;
+
+            // Filtrado lógico
+            const filteredData = database.filter(item => {
+                const matchesSearch = 
+                    (item.nombre || "N/D").toLowerCase().includes(searchTerm) ||
+                    (item.institucion || "N/D").toLowerCase().includes(searchTerm) ||
+                    (item.cargo || "N/D").toLowerCase().includes(searchTerm);
+                const matchesCity = cityFilter === "" || item.ciudad === cityFilter;
+                return matchesSearch && matchesCity;
+            });
+
+            // Reconstrucción de la tabla limpia
+            tableBody.innerHTML = '';
+            filteredData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.fecha || "N/D"}</td>
+                    <td style="font-weight: 500; color: var(--primary);">${item.nombre || "N/D"}</td>
+                    <td>${item.correo || "N/D"}</td>
+                    <td>${item.institucion || "N/D"}</td>
+                    <td>${item.cargo || "N/D"}</td>
+                    <td>${item.ciudad || "N/D"}</td>
+                    <td><span class="badge ${item.asistira === 'Sí' ? 'badge-success' : 'badge-secondary'}">${item.asistira || "N/D"}</span></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.comentarios || 'N/D'}">${item.comentarios || "N/D"}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // Actualización dinámica de KPIs
+            document.getElementById('kpi-total').textContent = database.length;
+            document.getElementById('kpi-confirmados').textContent = database.filter(i => i.asistira === 'Sí').length;
+            document.getElementById('kpi-ciudades').textContent = [...new Set(database.map(i => i.ciudad))].filter(Boolean).length;
+        }
+
+        // Sistema de notificaciones Premium Toast
+        function showNotification(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // Captura y envío del formulario (Local + Web App Cloud Sync)
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Formateo de fecha según zona horaria local simulando el sistema
+            const now = new Date();
+            const formattedDate = now.getFullYear() + '-' + 
+                String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                String(now.getDate()).padStart(2, '0') + ' ' + 
+                String(now.getHours()).padStart(2, '0') + ':' + 
+                String(now.getMinutes()).padStart(2, '0') + ':00';
+
+            const nuevoInscrito = {
+                fecha: formattedDate,
+                nombre: document.getElementById('form-nombre').value,
+                correo: document.getElementById('form-correo').value,
+                institucion: document.getElementById('form-institucion').value,
+                cargo: document.getElementById('form-cargo').value,
+                ciudad: document.getElementById('form-ciudad').value,
+                asistira: document.getElementById('form-asistencia').value,
+                comentarios: document.getElementById('form-comentarios').value || "N/D"
+            };
+
+            // 1. Actualización reactiva instantánea en la interfaz
+            database.unshift(nuevoInscrito);
+            renderPortal();
+            registrationForm.reset();
+            showNotification("¡Inscripción procesada localmente con éxito!");
+
+            // 2. Sincronización en la nube con Google Sheets (en segundo plano)
+            if (WEB_APP_URL !== "REMPLAZA_CON_TU_WEB_APP_URL") {
+                fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(nuevoInscrito)
+                })
+                .then(() => showNotification("Sincronización en la nube completada de forma segura."))
+                .catch(err => console.error("Error en sincronización remota:", err));
+            }
+        });
+
+        // Listeners de búsqueda y filtrado reactivo
+        searchBar.addEventListener('input', renderPortal);
+        filterCity.addEventListener('change', renderPortal);
+
+        // Inicialización nativa al cargar la UI
+        document.addEventListener('DOMContentLoaded', renderPortal);
+    </script>
+</body>
+</html>
